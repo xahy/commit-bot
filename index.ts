@@ -4,6 +4,14 @@ import clipboard from "clipboardy";
 
 const CONVENTIONAL_REQUEST = `following conventional commit (<type>: <subject>)`;
 
+try {
+  execSync("git rev-parse --is-inside-work-tree 2>/dev/null");
+} catch (e) {
+  console.log("This is not a git repository.");
+  process.exit(1);
+}
+
+
 let diff = "";
 try {
   diff = execSync("git diff --cached").toString();
